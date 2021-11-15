@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Climbing
   - 
   - 
   - 
@@ -40,4 +41,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 92037305
+    locked: 0
+  - name: Water
+    uniqueID: 1897831885
+    locked: 0
+  - name: Platforms
+    uniqueID: 3677861899
+    locked: 0
+  - name: Climbing
+    uniqueID: 1974960615
+    locked: 0
+  - name: Player
+    uniqueID: 1296269345
     locked: 0
