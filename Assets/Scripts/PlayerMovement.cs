@@ -20,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed = 22f;
 
     [SerializeField] float climbSpeed = 5f;
- 
+
+    float gravityScaleAtStart;
+
 
 
 
@@ -28,12 +30,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        capCollider = GetComponent<CapsuleCollider2D>();        
+        capCollider = GetComponent<CapsuleCollider2D>();
+
     }
 
     void Start()
     {
-
+        gravityScaleAtStart = rb.gravityScale;
     }
 
     void Update()
@@ -68,14 +71,18 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = playerVelocity;
 
         playeHasHorizontalSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
-        animator.SetBool("isRunning", playeHasHorizontalSpeed);
+
+        // if (capCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        // {
+            animator.SetBool("isRunning", playeHasHorizontalSpeed);
+       // }
     }
 
     void FlipSprite()
     {
         if (playeHasHorizontalSpeed)
         {
-            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1f);            
+            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1f);
         }
     }
 
@@ -83,10 +90,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!capCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
+            rb.gravityScale = gravityScaleAtStart;
+            animator.SetBool("isClimbing", false);
             return;
         }
 
         Vector2 climbVelocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
         rb.velocity = climbVelocity;
+        rb.gravityScale = 0f;
+
+        bool playerHasVerticalVelocity =  Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+        animator.SetBool("isClimbing", playerHasVerticalVelocity);
     }
 }
