@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] Vector2 deathKick = new Vector2(10f, 10f);
 
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
+
+
     float gravityScaleAtStart;
 
 
@@ -51,6 +55,12 @@ public class PlayerMovement : MonoBehaviour
         FlipSprite();
         ClimbLadder();
         Die();
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) { return; }
+        Instantiate(bullet, gun.position, transform.rotation);
     }
 
     void OnMove(InputValue value)
@@ -111,11 +121,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         {
             isAlive = false;
-            animator.SetTrigger("Dying");
-            //Vector2 deathVelocity = new Vector2(-(rb.velocity.x), rb.velocity.y * 10f);
+            animator.SetTrigger("Dying"); 
             rb.velocity = deathKick;
         }
     }
