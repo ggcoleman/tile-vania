@@ -10,10 +10,13 @@ public class Bullet : MonoBehaviour
     PlayerMovement player; 
     float xSpeed;
 
+    CircleCollider2D bulletCollider;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<PlayerMovement>(); 
+        bulletCollider = GetComponent<CircleCollider2D>();
     }
 
 
@@ -37,14 +40,13 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // private void OnCollisionEnter2D(Collision2D other)
-    // {
+    private void OnCollisionEnter2D(Collision2D other)
+    {
 
-    //     if (collider.IsTouchingLayers(LayerMask.GetMask("Ground")))
-    //     {
-
-    //         Destroy(gameObject);
-    //     }
-    // }
+        if (bulletCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            Destroy(gameObject);
+        }
+    }
 
 }
