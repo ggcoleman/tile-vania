@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
 
     [SerializeField] Vector2 deathKick = new Vector2(10f, 10f);
-
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
 
@@ -124,8 +125,9 @@ public class PlayerMovement : MonoBehaviour
         if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         {
             isAlive = false;
-            animator.SetTrigger("Dying"); 
+            animator.SetTrigger("Dying");
             rb.velocity = deathKick;
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
-    }
+    }    
 }

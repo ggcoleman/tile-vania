@@ -22,7 +22,7 @@ TagManager:
   - Enemies
   - Hazards
   - Bullerts
-  - 
+  - Interactibles
   - 
   - 
   - 
@@ -58,6 +58,9 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 4168532497
+    locked: 0
+  - name: Interactibles
+    uniqueID: 604759985
     locked: 0
   - name: Enemies
     uniqueID: 3592845987
